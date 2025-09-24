@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>alert/confirm</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const res = document.querySelector('#res');
+            document.querySelector('#art').addEventListener('click', function(){
+                res.innerHTML = '';
+                setTimeout(function(){
+                    alert('alert!');
+                    res.innerHTML = 'click alert!';
+                }, 4)
+            });
+            document.querySelector('#cnf').addEventListener('click', function(){
+                res.innerHTML = '';
+                setTimeout(function(){
+                    const cnfRes = confirm('confirm?');
+                    if(cnfRes) {
+                        res.innerHTML = 'click confirm OK!';
+                    } else {
+                        res.innerHTML = 'click confirm Cancel!';
+                    }
+                }, 4)
+            });
+        });
+    </script>
+</head>
+<body>
+    <button type="button" id="art">alert</button>
+    <button type="button" id="cnf">confirm</button>
+    <br>
+    <div id="res"></div>
+</body>
+</html>
