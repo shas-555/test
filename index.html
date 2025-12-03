@@ -37,19 +37,20 @@
       return Math.hypot(dx, dy);
     }
 
-    $('.js-pinch-img')[0].addEventListener('touchstart', function(e) {
-        const touches = e.touches;
+    $('.js-pinch-img')
+      .on('touchstart', function(e) {
+        const touches = e.originalEvent.touches;
         if (touches.length === 2) {
-          startDist = f.getDist(touches[0], touches[1]);
+          startDist = getDist(touches[0], touches[1]);
         }
-      });
-    $('.js-pinch-img')[0].addEventListener('touchmove', function(e) {
-        const touches = e.touches;
+      })
+      .on('touchmove', function(e) {
+        const touches = e.originalEvent.touches;
 
         if (touches.length === 2) {
           e.preventDefault(); // ブラウザの標準ピンチを止める
 
-          const newDist = f.getDist(touches[0], touches[1]);
+          const newDist = getDist(touches[0], touches[1]);
           const ratio = newDist / startDist;
           startDist = newDist;
 
