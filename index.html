@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>pdf-iframe</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+
+    <h1>Zoomテスト</h1>
+    <div id="img-wrapper">
+        <img id="img" src="./sample.png">
+    </div>
+
+
+    <script>
+
+        var pinchStartDistance = null;
+        function handleTouchMove(e) {
+            if (e.touches.length !== 2) {
+                return;
+            }
+
+            var distance = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+
+            if (pinchStartDistance === null) {
+                pinchStartDistance = distance;
+                return;
+            }
+
+            let scale = document.querySelector('#img').getAttribute('data-scale') || 0;
+            scale *= distance / pinchStartDistance;
+            scale = Math.max(scale, 1);
+
+            pinchStartDistance = distance;
+            document.querySelector('#img').style.transform = 'scale(' + scale + ')';
+        }
+
+
+
+        document.querySelector('#img').addEventListener('touchmove', zoom);
+    </script>
+
+
+
+</body>
+
+</html>
