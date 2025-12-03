@@ -11,52 +11,55 @@
             overflow: scroll;
             width: 50vw;
             height: 50vh;
+            margin: 0 auto;
         }
         #img {
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
     <h1>Zoomテスト</h1>
     <div id="img-wrapper">
-        <img id="img" src="./sample.png" >
+        <img id="img" class="js-pinch-img" src="./sample.png" >
     </div>
 
 
     <script>
-        let scale = 1;
-        let startDist = 0;
+  let scale = 1;
+  let startDist = 0;
 
-        function getDist(t1, t2) {
-            const dx = t2.clientX - t1.clientX;
-            const dy = t2.clientY - t1.clientY;
-            return Math.hypot(dx, dy);
+  function getDist(t1, t2) {
+      const dx = t2.clientX - t1.clientX;
+      const dy = t2.clientY - t1.clientY;
+      return Math.hypot(dx, dy);
+    }
+
+    $('.js-pinch-img')
+      .on('touchstart', function(e) {
+        const touches = e.originalEvent.touches;
+        if (touches.length === 2) {
+          startDist = f.getDist(touches[0], touches[1]);
         }
+      })
+      .on('touchmove', function(e) {
+        const touches = e.originalEvent.touches;
 
-        document.querySelector('#img').addEventListener('touchstart', function(e) {
-            const touches = e.touches;
-            if (touches.length === 2) {
-                startDist = getDist(touches[0], touches[1]);
-            }
-        });
-        document.querySelector('#img').addEventListener('touchmove', function(e) {
-            const touches = e.touches;
+        if (touches.length === 2) {
+          e.preventDefault(); // ブラウザの標準ピンチを止める
 
-            if (touches.length === 2) {
-                e.preventDefault(); // ブラウザの標準ピンチを止める
+          const newDist = f.getDist(touches[0], touches[1]);
+          const ratio = newDist / startDist;
+          startDist = newDist;
 
-                const newDist = getDist(touches[0], touches[1]);
-                const ratio = newDist / startDist;
-                startDist = newDist;
+          scale *= ratio;
+          scale = Math.min(scale, 0.5); // 最小は0.5までとする。
 
-                scale *= ratio;
-                scale = Math.min(Math.max(scale, 0.5), 4); // 限界
-
-                document.querySelector('#img').style.transform = `scale(${scale})`;
-            }
-        });
+          $(this).css('transform', 'scale({0})'.__format(scale));
+        }
+      });
 
     </script>
 
@@ -65,4 +68,3 @@
 </body>
 
 </html>
-
