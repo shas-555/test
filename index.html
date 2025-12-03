@@ -28,24 +28,23 @@
 
 
     <script>
-  let scale = 1;
-  let startDist = 0;
+    let scale = 1;
+    let startDist = 0;
 
-  function getDist(t1, t2) {
+    function getDist(t1, t2) {
       const dx = t2.clientX - t1.clientX;
       const dy = t2.clientY - t1.clientY;
       return Math.hypot(dx, dy);
     }
 
-    $('.js-pinch-img')
-      .on('touchstart', function(e) {
-        const touches = e.originalEvent.touches;
+    $('.js-pinch-img')[0].addEventListener('touchstart', function(e) {
+        const touches = e.touches;
         if (touches.length === 2) {
           startDist = f.getDist(touches[0], touches[1]);
         }
-      })
-      .on('touchmove', function(e) {
-        const touches = e.originalEvent.touches;
+      });
+    $('.js-pinch-img')[0].addEventListener('touchmove', function(e) {
+        const touches = e.touches;
 
         if (touches.length === 2) {
           e.preventDefault(); // ブラウザの標準ピンチを止める
@@ -68,4 +67,3 @@
 </body>
 
 </html>
-
