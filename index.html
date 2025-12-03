@@ -55,7 +55,7 @@
           startDist = newDist;
 
           scale *= ratio;
-          scale = Math.min(scale, 0.5); // 最小は0.5までとする。
+          scale = Math.max(scale, 0.5); // 最小は0.5までとする。
 
           $(this).css('transform', `scale(${scale})`);
         }
@@ -68,3 +68,4 @@
 </body>
 
 </html>
+
